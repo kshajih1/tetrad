@@ -18,7 +18,6 @@
 // along with this program; if not, write to the Free Software               //
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA //
 ///////////////////////////////////////////////////////////////////////////////
-
 package edu.cmu.tetradapp.knowledge_editor;
 
 import edu.cmu.tetrad.data.DataReader;
@@ -31,11 +30,6 @@ import edu.cmu.tetrad.util.JOptionUtils;
 import edu.cmu.tetrad.util.TetradLogger;
 import edu.cmu.tetradapp.model.ForbiddenGraphModel;
 import edu.cmu.tetradapp.model.KnowledgeBoxModel;
-
-import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -48,12 +42,18 @@ import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.prefs.Preferences;
+import javax.swing.*;
+import javax.swing.border.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * Edits knowledge of forbidden and required edges.
+ *
  * @author kaalpurush
  */
 public class KnowledgeBoxEditor extends JPanel {
+
     private static final long serialVersionUID = 959706288096545158L;
 
     private List<String> varNames;
@@ -128,8 +128,8 @@ public class KnowledgeBoxEditor extends JPanel {
         load.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser chooser = new JFileChooser();
-                String sessionSaveLocation =
-                        Preferences.userRoot().get("fileSaveLocation", "");
+                String sessionSaveLocation
+                        = Preferences.userRoot().get("fileSaveLocation", "");
                 chooser.setCurrentDirectory(new File(sessionSaveLocation));
                 chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
@@ -144,7 +144,6 @@ public class KnowledgeBoxEditor extends JPanel {
                 if (file == null) {
                     return;
                 }
-
 
                 Preferences.userRoot().put("fileSaveLocation", file.getParent());
 
@@ -168,8 +167,8 @@ public class KnowledgeBoxEditor extends JPanel {
         save.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser chooser = new JFileChooser();
-                String sessionSaveLocation =
-                        Preferences.userRoot().get("fileSaveLocation", "");
+                String sessionSaveLocation
+                        = Preferences.userRoot().get("fileSaveLocation", "");
                 chooser.setCurrentDirectory(new File(sessionSaveLocation));
                 chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
@@ -184,7 +183,6 @@ public class KnowledgeBoxEditor extends JPanel {
                 if (file == null) {
                     return;
                 }
-
 
                 Preferences.userRoot().put("fileSaveLocation", file.getParent());
 
@@ -227,7 +225,6 @@ public class KnowledgeBoxEditor extends JPanel {
     // public KnowledgeEditor(KnowledgeWrapper wrapper) {
     // this(wrapper.getKnowledge());
     // }
-
     private Box tierDisplay() {
         if (numTiers < 0) {
             int numTiers = getKnowledge().getNumTiers();
@@ -243,8 +240,7 @@ public class KnowledgeBoxEditor extends JPanel {
         b1.add(new JLabel("Not in tier:"));
         b1.add(Box.createHorizontalGlue());
         b1.add(new JLabel("# Tiers = "));
-        SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(
-                getNumTiers(), 2, 100, 1);
+        SpinnerNumberModel spinnerNumberModel = new SpinnerNumberModel(getNumTiers(), 2, 100, 1);
         spinnerNumberModel.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 SpinnerNumberModel model = (SpinnerNumberModel) e.getSource();
@@ -253,9 +249,9 @@ public class KnowledgeBoxEditor extends JPanel {
 //                int knowledgeNumTiers = getKnowledge().getNumTiers();
 //
 //                if (numTiers >= knowledgeNumTiers) {
-                    setNumDisplayTiers(numTiers);
-                    setNumTiers(numTiers);
-                    model.setValue(numTiers);
+                setNumDisplayTiers(numTiers);
+                setNumTiers(numTiers);
+                model.setValue(numTiers);
 //                } else {
 //                    model.setValue(numTiers);
 //                    setNumTiers(knowledgeNumTiers);
@@ -340,7 +336,6 @@ public class KnowledgeBoxEditor extends JPanel {
             Box textRow = Box.createHorizontalBox();
             textRow.add(new JLabel("Tier " + (tier + 1)));
             final int _tier = tier;
-
 
             textRow.add(Box.createHorizontalGlue());
 
@@ -503,8 +498,8 @@ public class KnowledgeBoxEditor extends JPanel {
 
         if (this.showRequiredByGroups) {
             for (Iterator<KnowledgeEdge> i = knowledge.requiredEdgesIterator(); i
-                    .hasNext(); ) {
-                KnowledgeEdge edge = i.next()   ;
+                    .hasNext();) {
+                KnowledgeEdge edge = i.next();
                 String from = edge.getFrom();
                 String to = edge.getTo();
                 if (knowledge.isRequiredByGroups(from, to)) {
@@ -521,7 +516,7 @@ public class KnowledgeBoxEditor extends JPanel {
 
         if (this.showForbiddenByGroups) {
             for (Iterator<KnowledgeEdge> i = knowledge.forbiddenEdgesIterator(); i
-                    .hasNext(); ) {
+                    .hasNext();) {
                 KnowledgeEdge edge = i.next();
                 String from = edge.getFrom();
                 String to = edge.getTo();
@@ -539,7 +534,7 @@ public class KnowledgeBoxEditor extends JPanel {
 
         if (showRequired) {
             for (Iterator<KnowledgeEdge> i = knowledge
-                    .explicitlyRequiredEdgesIterator(); i.hasNext(); ) {
+                    .explicitlyRequiredEdgesIterator(); i.hasNext();) {
                 KnowledgeEdge pair = i.next();
                 String from = pair.getFrom();
                 String to = pair.getTo();
@@ -559,7 +554,7 @@ public class KnowledgeBoxEditor extends JPanel {
         }
 
         if (showForbiddenByTiers) {
-            for (Iterator<KnowledgeEdge> i = knowledge.forbiddenEdgesIterator(); i.hasNext(); ) {
+            for (Iterator<KnowledgeEdge> i = knowledge.forbiddenEdgesIterator(); i.hasNext();) {
                 KnowledgeEdge pair = i.next();
                 String from = pair.getFrom();
                 String to = pair.getTo();
@@ -596,7 +591,7 @@ public class KnowledgeBoxEditor extends JPanel {
 
         if (showForbiddenExplicitly) {
             for (Iterator<KnowledgeEdge> i = knowledge
-                    .explicitlyForbiddenEdgesIterator(); i.hasNext(); ) {
+                    .explicitlyForbiddenEdgesIterator(); i.hasNext();) {
                 KnowledgeEdge pair = i.next();
 
                 String from = pair.getFrom();
@@ -669,8 +664,8 @@ public class KnowledgeBoxEditor extends JPanel {
         loadFromFileButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser chooser = new JFileChooser();
-                String sessionSaveLocation =
-                        Preferences.userRoot().get("fileSaveLocation", "");
+                String sessionSaveLocation
+                        = Preferences.userRoot().get("fileSaveLocation", "");
                 chooser.setCurrentDirectory(new File(sessionSaveLocation));
                 chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
@@ -685,7 +680,6 @@ public class KnowledgeBoxEditor extends JPanel {
                 if (file == null) {
                     return;
                 }
-
 
                 Preferences.userRoot().put("fileSaveLocation", file.getParent());
 
@@ -813,6 +807,7 @@ public class KnowledgeBoxEditor extends JPanel {
 
     public class DragDropList extends JList implements DropTargetListener,
             DragSourceListener, DragGestureListener {
+
         private List movedList;
 
         /**
@@ -834,8 +829,8 @@ public class KnowledgeBoxEditor extends JPanel {
             setVisibleRowCount(0);
             this.setCellRenderer(new ListCellRenderer() {
                 public Component getListCellRendererComponent(JList list,
-                                                              Object value, int index, boolean isSelected,
-                                                              boolean cellHasFocus) {
+                        Object value, int index, boolean isSelected,
+                        boolean cellHasFocus) {
                     Color fillColor = new Color(153, 204, 204);
                     Color selectedFillColor = new Color(255, 204, 102);
 
@@ -993,8 +988,7 @@ public class KnowledgeBoxEditor extends JPanel {
 
                     if (i1 == 0) {
                         return i0;
-                    }
-                    else {
+                    } else {
                         return i1;
                     }
                 }
@@ -1010,6 +1004,7 @@ public class KnowledgeBoxEditor extends JPanel {
 
     private static final class MyDragGestureRecognizer extends
             DragGestureRecognizer {
+
         public MyDragGestureRecognizer(DragSource ds) {
             super(ds);
         }
@@ -1025,6 +1020,3 @@ public class KnowledgeBoxEditor extends JPanel {
         }
     }
 }
-
-
-
